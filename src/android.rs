@@ -14,5 +14,5 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
 }
 
 /// Handle to the Android network-interfaces plugin. Constructing it (via
-/// [`init`]) starts the default-network binding; there are no further APIs.
+/// [`init`]) acquires the WiFi multicast lock; there are no further APIs.
 pub struct NetworkInterfaces<R: Runtime>(#[allow(dead_code)] PluginHandle<R>);

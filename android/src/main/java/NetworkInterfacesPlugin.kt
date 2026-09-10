@@ -9,6 +9,6 @@ import app.tauri.plugin.Plugin
 class NetworkInterfacesPlugin(private val activity: Activity) : Plugin(activity) {
     override fun load(webView: WebView) {
         super.load(webView)
-        NetworkBinder.start(activity.applicationContext)
+        MulticastLockHolder.acquire(activity.applicationContext)
     }
 }

@@ -2,7 +2,7 @@
 name = "tauri-plugin-network-interfaces"
 version = "0.1.0"
 authors = ["Dash Chat"]
-description = "Pin the process to the OS-chosen default network on Android, so a multi-homed device's DNS and sockets don't leak onto a broken interface."
+description = "Holds a WiFi multicast lock on Android so inbound mDNS reaches the app, for LAN-only p2p discovery."
 edition = "2021"
 rust-version = "1.77.2"
 exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]

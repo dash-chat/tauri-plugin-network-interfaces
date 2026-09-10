@@ -17,10 +17,10 @@ pub use imp::NetworkInterfaces;
 
 /// Initializes the plugin.
 ///
-/// On Android this registers a default-network callback that pins the whole
-/// process — every future socket and all DNS lookups — to the network Android
-/// chose as the app's default, re-pinning whenever that default changes. On all
-/// other platforms it is a no-op.
+/// On Android it acquires a WiFi multicast lock so inbound mDNS reaches our
+/// sockets (Android otherwise filters multicast not addressed to the device,
+/// which silently breaks LAN-only peer discovery). On all other platforms it is
+/// a no-op.
 pub fn init<R: Runtime>() -> TauriPlugin<R> {
     Builder::new("network-interfaces")
         .setup(|app, api| {

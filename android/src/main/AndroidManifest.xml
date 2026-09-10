@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Merged into the host app's manifest. Required to observe the default
-         network via ConnectivityManager.registerDefaultNetworkCallback. -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Required to acquire a WifiManager.MulticastLock so inbound mDNS
+         multicast reaches our sockets; without it Android filters those packets
+         and LAN-only p2p discovery silently fails. -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
 </manifest>
