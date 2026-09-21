@@ -295,10 +295,34 @@
       "type": "string",
       "oneOf": [
         {
-          "description": "Default permissions for the plugin",
+          "description": "Enables the check_permissions command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-check-permissions",
+          "markdownDescription": "Enables the check_permissions command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the check_permissions command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-check-permissions",
+          "markdownDescription": "Denies the check_permissions command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the request_permissions command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-request-permissions",
+          "markdownDescription": "Enables the request_permissions command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the request_permissions command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-request-permissions",
+          "markdownDescription": "Denies the request_permissions command without any pre-configured scope."
+        },
+        {
+          "description": "Allows reading and requesting the local network permission.\n#### This default permission set includes:\n\n- `allow-check-permissions`\n- `allow-request-permissions`",
           "type": "string",
           "const": "default",
-          "markdownDescription": "Default permissions for the plugin"
+          "markdownDescription": "Allows reading and requesting the local network permission.\n#### This default permission set includes:\n\n- `allow-check-permissions`\n- `allow-request-permissions`"
         }
       ]
     }
