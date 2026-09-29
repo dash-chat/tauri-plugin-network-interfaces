@@ -4,6 +4,8 @@ use tauri::{
   AppHandle, Runtime,
 };
 
+#[cfg(feature = "wifi-control")]
+use crate::wifi::{AddArgs, ForgetArgs, RequestJoinArgs, WifiAddedSsids, WifiCurrent};
 use crate::PermissionStatus;
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
@@ -26,5 +28,30 @@ impl<R: Runtime> NetworkInterfaces<R> {
 
   pub fn request_permissions(&self) -> crate::Result<PermissionStatus> {
     self.check_permissions()
+  }
+
+  #[cfg(feature = "wifi-control")]
+  pub async fn wifi_current(&self) -> crate::Result<WifiCurrent> {
+    Err(crate::Error::WifiUnsupported)
+  }
+
+  #[cfg(feature = "wifi-control")]
+  pub async fn wifi_added_ssids(&self) -> crate::Result<WifiAddedSsids> {
+    Err(crate::Error::WifiUnsupported)
+  }
+
+  #[cfg(feature = "wifi-control")]
+  pub async fn wifi_add(&self, _args: AddArgs) -> crate::Result<()> {
+    Err(crate::Error::WifiUnsupported)
+  }
+
+  #[cfg(feature = "wifi-control")]
+  pub async fn wifi_request_join(&self, _args: RequestJoinArgs) -> crate::Result<()> {
+    Err(crate::Error::WifiUnsupported)
+  }
+
+  #[cfg(feature = "wifi-control")]
+  pub async fn wifi_forget(&self, _args: ForgetArgs) -> crate::Result<()> {
+    Err(crate::Error::WifiUnsupported)
   }
 }

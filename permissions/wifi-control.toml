@@ -1,0 +1,12 @@
+"$schema" = "schemas/schema.json"
+
+[[set]]
+identifier = "wifi-control"
+description = "Add, request a join (iOS), forget and list the Wi-Fi networks the app configured, and read the current one (the `wifi-control` cargo feature)."
+permissions = [
+  "allow-wifi-current",
+  "allow-wifi-added-ssids",
+  "allow-wifi-add",
+  "allow-wifi-request-join",
+  "allow-wifi-forget",
+]

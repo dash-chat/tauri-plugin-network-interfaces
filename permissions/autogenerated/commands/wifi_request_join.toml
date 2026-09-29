@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-wifi-request-join"
+description = "Enables the wifi_request_join command without any pre-configured scope."
+commands.allow = ["wifi_request_join"]
+
+[[permission]]
+identifier = "deny-wifi-request-join"
+description = "Denies the wifi_request_join command without any pre-configured scope."
+commands.deny = ["wifi_request_join"]

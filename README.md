@@ -16,11 +16,11 @@ coherent interface.
 
 ## Platform Support
 
-| Platform | Supported |
-|----------|-----------|
-| Android  | Yes       |
-| iOS      | No (no-op) |
-| Desktop  | No (no-op) |
+| Platform | Process pinning / multicast lock | Wi-Fi control (`wifi-control` feature) |
+|----------|-----------|-----------|
+| Android  | Yes       | add / forget / list / current (network suggestions, API 29+); no requestJoin |
+| iOS      | No (no-op) | add / requestJoin / forget / list / current (`NEHotspotConfiguration`) |
+| Desktop  | No (no-op) | No (commands reject) |
 
 iOS does not need this: a non-VPN iOS app is suspended in the background (no
 long-lived node to storm), and there is no `bindProcessToNetwork` equivalent. If
@@ -74,3 +74,36 @@ binding. Sockets opened before the bind are not retroactively re-routed.
 
 It deliberately does **not** require `NET_CAPABILITY_VALIDATED`, so it still
 binds on LAN-only / offline networks (mDNS p2p, a local mailbox).
+
+## Wi-Fi control (`wifi-control` feature)
+
+For test harnesses that need to walk a phone across networks. Enable the cargo
+feature and grant the `network-interfaces:wifi-control` permission set; the JS
+bindings are `wifiCurrent`, `wifiAddedSsids`, `wifiAdd`, `wifiRequestJoin` and
+`wifiForget` in `tauri-plugin-network-interfaces-api`.
+
+The model is the one iOS imposes: the app owns the networks it configured and
+nothing else. `wifiAdd(ssid, passphrase)` registers one as the app's and the
+platform joins it when it sees fit; `wifiRequestJoin(ssid, passphrase)` (iOS
+only) adds one, has the user asked, and resolves once the device is on it with
+an address or rejects with why not;
+`wifiForget(ssid)` drops one and the OS falls back to whatever the user has
+saved; `wifiAddedSsids()` lists the app's own (in range or not); and
+`wifiCurrent()` reads the interface: `{ ssid, address, prefixLength }`, where
+`address` is the IPv4 of the Wi-Fi interface ("" while there is none),
+`prefixLength` its subnet's (0 while there is none), and `ssid` is only known
+where the OS lets the app see it.
+
+- **iOS** needs the `com.apple.developer.networking.HotspotConfiguration` and
+  `com.apple.developer.networking.wifi-info` entitlements on the host app (both
+  self-serve; automatic signing adds them to the App ID). Every join shows a
+  system "join this network?" alert. `ssid` is "" for networks the app did not
+  configure unless the app also holds location permission. The radio cannot be
+  turned off or on.
+- **Android** uses `WifiNetworkSuggestion`, so there is no `wifiRequestJoin`: a
+  suggestion is joined when the platform picks it as the best candidate, and a
+  network the user saved outranks it while in range. The user has to approve
+  the app's suggestions once (`adb shell cmd wifi network-suggestions-set-user-approved <package>
+  yes` does it from a harness). `wifiAddedSsids` needs API 30. `ssid` is
+  "" without location permission.
+

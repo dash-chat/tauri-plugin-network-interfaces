@@ -9,6 +9,9 @@ pub enum Error {
   #[cfg(mobile)]
   #[error(transparent)]
   PluginInvoke(#[from] tauri::plugin::mobile::PluginInvokeError),
+  #[cfg(feature = "wifi-control")]
+  #[error("this Wi-Fi operation is not available on this platform")]
+  WifiUnsupported,
 }
 
 impl Serialize for Error {

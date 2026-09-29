@@ -8,6 +8,12 @@ rust-version = "1.77.2"
 exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]
 links = "tauri-plugin-network-interfaces"
 
+[features]
+# Wi-Fi control for test harnesses: join, forget and list the networks the app
+# itself configured, and read the current one. iOS needs the HotspotConfiguration
+# and wifi-info entitlements in the host app.
+wifi-control = []
+
 [dependencies]
 tauri = { version = "2.9.2" }
 serde = "1.0"

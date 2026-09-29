@@ -4,11 +4,24 @@ import android.app.Activity
 import android.os.Build
 import android.webkit.WebView
 import app.tauri.annotation.Command
+import app.tauri.annotation.InvokeArg
 import app.tauri.annotation.Permission
 import app.tauri.annotation.TauriPlugin
 import app.tauri.plugin.Invoke
+import app.tauri.plugin.JSArray
 import app.tauri.plugin.JSObject
 import app.tauri.plugin.Plugin
+
+@InvokeArg
+class WifiAddArgs {
+    lateinit var ssid: String
+    var passphrase: String = ""
+}
+
+@InvokeArg
+class WifiForgetArgs {
+    lateinit var ssid: String
+}
 
 /** `Manifest.permission.ACCESS_LOCAL_NETWORK` only exists from API 37, so the
  *  literal is what keeps this compiling against a lower compileSdk. */
@@ -48,4 +61,43 @@ class NetworkInterfacesPlugin(private val activity: Activity) : Plugin(activity)
 
     private fun implicitlyGranted() =
         JSObject().apply { put(ALIAS_LOCAL_NETWORK, "granted") }
+
+    @Command
+    fun wifiCurrent(invoke: Invoke) {
+        val current = WifiControl.current(activity.applicationContext)
+        invoke.resolve(JSObject().apply {
+            put("ssid", current.ssid)
+            put("address", current.address)
+            put("prefixLength", current.prefixLength)
+        })
+    }
+
+    @Command
+    fun wifiAddedSsids(invoke: Invoke) {
+        val ssids = JSArray()
+        for (ssid in WifiControl.addedSsids(activity.applicationContext)) ssids.put(ssid)
+        invoke.resolve(JSObject().apply { put("ssids", ssids) })
+    }
+
+    @Command
+    fun wifiAdd(invoke: Invoke) {
+        val args = invoke.parseArgs(WifiAddArgs::class.java)
+        try {
+            WifiControl.add(activity.applicationContext, args.ssid, args.passphrase)
+            invoke.resolve()
+        } catch (e: Exception) {
+            invoke.reject(e.message ?: e.toString())
+        }
+    }
+
+    @Command
+    fun wifiForget(invoke: Invoke) {
+        val args = invoke.parseArgs(WifiForgetArgs::class.java)
+        try {
+            WifiControl.forget(activity.applicationContext, args.ssid)
+            invoke.resolve()
+        } catch (e: Exception) {
+            invoke.reject(e.message ?: e.toString())
+        }
+    }
 }

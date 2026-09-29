@@ -319,10 +319,76 @@
           "markdownDescription": "Denies the request_permissions command without any pre-configured scope."
         },
         {
+          "description": "Enables the wifi_add command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-wifi-add",
+          "markdownDescription": "Enables the wifi_add command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the wifi_add command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-wifi-add",
+          "markdownDescription": "Denies the wifi_add command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the wifi_added_ssids command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-wifi-added-ssids",
+          "markdownDescription": "Enables the wifi_added_ssids command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the wifi_added_ssids command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-wifi-added-ssids",
+          "markdownDescription": "Denies the wifi_added_ssids command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the wifi_current command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-wifi-current",
+          "markdownDescription": "Enables the wifi_current command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the wifi_current command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-wifi-current",
+          "markdownDescription": "Denies the wifi_current command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the wifi_forget command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-wifi-forget",
+          "markdownDescription": "Enables the wifi_forget command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the wifi_forget command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-wifi-forget",
+          "markdownDescription": "Denies the wifi_forget command without any pre-configured scope."
+        },
+        {
+          "description": "Enables the wifi_request_join command without any pre-configured scope.",
+          "type": "string",
+          "const": "allow-wifi-request-join",
+          "markdownDescription": "Enables the wifi_request_join command without any pre-configured scope."
+        },
+        {
+          "description": "Denies the wifi_request_join command without any pre-configured scope.",
+          "type": "string",
+          "const": "deny-wifi-request-join",
+          "markdownDescription": "Denies the wifi_request_join command without any pre-configured scope."
+        },
+        {
           "description": "Allows reading and requesting the local network permission.\n#### This default permission set includes:\n\n- `allow-check-permissions`\n- `allow-request-permissions`",
           "type": "string",
           "const": "default",
           "markdownDescription": "Allows reading and requesting the local network permission.\n#### This default permission set includes:\n\n- `allow-check-permissions`\n- `allow-request-permissions`"
+        },
+        {
+          "description": "Add, request a join (iOS), forget and list the Wi-Fi networks the app configured, and read the current one (the `wifi-control` cargo feature).\n#### This permission set includes:\n\n- `allow-wifi-current`\n- `allow-wifi-added-ssids`\n- `allow-wifi-add`\n- `allow-wifi-request-join`\n- `allow-wifi-forget`",
+          "type": "string",
+          "const": "wifi-control",
+          "markdownDescription": "Add, request a join (iOS), forget and list the Wi-Fi networks the app configured, and read the current one (the `wifi-control` cargo feature).\n#### This permission set includes:\n\n- `allow-wifi-current`\n- `allow-wifi-added-ssids`\n- `allow-wifi-add`\n- `allow-wifi-request-join`\n- `allow-wifi-forget`"
         }
       ]
     }
