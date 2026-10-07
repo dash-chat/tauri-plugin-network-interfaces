@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "prepare": "rollup -c"
+    "prepare": "rollup -c --forceExit"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0"
