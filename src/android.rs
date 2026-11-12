@@ -4,8 +4,6 @@ use tauri::{
   AppHandle, Runtime,
 };
 
-#[cfg(feature = "wifi-control")]
-use crate::wifi::{AddArgs, ForgetArgs, RequestJoinArgs, WifiAddedSsids, WifiCurrent};
 use crate::PermissionStatus;
 
 pub fn init<R: Runtime, C: DeserializeOwned>(
@@ -40,49 +38,6 @@ impl<R: Runtime> NetworkInterfaces<R> {
     self
       .0
       .run_mobile_plugin("requestPermissions", RequestArgs { permissions: None })
-      .map_err(Into::into)
-  }
-
-  #[cfg(feature = "wifi-control")]
-  pub async fn wifi_current(&self) -> crate::Result<WifiCurrent> {
-    self
-      .0
-      .run_mobile_plugin_async("wifiCurrent", ())
-      .await
-      .map_err(Into::into)
-  }
-
-  #[cfg(feature = "wifi-control")]
-  pub async fn wifi_added_ssids(&self) -> crate::Result<WifiAddedSsids> {
-    self
-      .0
-      .run_mobile_plugin_async("wifiAddedSsids", ())
-      .await
-      .map_err(Into::into)
-  }
-
-  #[cfg(feature = "wifi-control")]
-  pub async fn wifi_add(&self, args: AddArgs) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin_async("wifiAdd", args)
-      .await
-      .map_err(Into::into)
-  }
-
-  /// Android lets an app suggest a network, not ask to switch to one: a
-  /// network the user saved outranks every suggestion while it is in range.
-  #[cfg(feature = "wifi-control")]
-  pub async fn wifi_request_join(&self, _args: RequestJoinArgs) -> crate::Result<()> {
-    Err(crate::Error::WifiUnsupported)
-  }
-
-  #[cfg(feature = "wifi-control")]
-  pub async fn wifi_forget(&self, args: ForgetArgs) -> crate::Result<()> {
-    self
-      .0
-      .run_mobile_plugin_async("wifiForget", args)
-      .await
       .map_err(Into::into)
   }
 }

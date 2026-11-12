@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "Dash Chat",
   "license": "MIT",
-  "description": "JS bindings for tauri-plugin-network-interfaces: the local network permission, and Wi-Fi control behind the plugin's `wifi-control` cargo feature.",
+  "description": "JS bindings for tauri-plugin-network-interfaces: the local network permission.",
   "type": "module",
   "types": "./dist-js/index.d.ts",
   "main": "./dist-js/index.cjs",
